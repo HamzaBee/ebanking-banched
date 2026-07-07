@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.enset.ebankingbanched.dtos.CustomerDto;
 import ma.enset.ebankingbanched.services.CustomerService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,5 +17,13 @@ public class CustomerRestController {
     @GetMapping("/customers")
     public List<CustomerDto> customerList(){
         return customerService.listCustomers();
+    }
+    @PostMapping("/customers")
+    public CustomerDto saveCustomer(@RequestBody CustomerDto customerDto){
+        return customerService.saveCustomer(customerDto);
+    }
+    @GetMapping("customers/{id}")
+    public CustomerDto getCustomer(@PathVariable(name = "id") Long id){
+        return customerService.getCustomer(id);
     }
 }
