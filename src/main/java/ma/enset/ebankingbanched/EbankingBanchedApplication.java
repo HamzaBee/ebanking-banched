@@ -1,6 +1,7 @@
 package ma.enset.ebankingbanched;
 
 import lombok.extern.slf4j.Slf4j;
+import ma.enset.ebankingbanched.dtos.CustomerDto;
 import ma.enset.ebankingbanched.entities.AccountOperation;
 import ma.enset.ebankingbanched.enums.AccountStatus;
 import ma.enset.ebankingbanched.entities.CurrentAccount;
@@ -12,6 +13,8 @@ import ma.enset.ebankingbanched.repositories.AccountOperationRepository;
 import ma.enset.ebankingbanched.repositories.BankAccountRepository;
 import ma.enset.ebankingbanched.repositories.CustomerRepository;
 import ma.enset.ebankingbanched.services.BankAccountService;
+import ma.enset.ebankingbanched.services.CustomerService;
+import ma.enset.ebankingbanched.services.OperationService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,27 +33,26 @@ public class EbankingBanchedApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(BankAccountService bankAccountService) {
+    CommandLineRunner commandLineRunner(CustomerService customerService,
+                                        BankAccountService bankAccountService,
+                                        OperationService operationService) {
         return args -> {
             Stream.of("Hassan", "Imane", "Mohamed").forEach(name -> {
-                Customer customer = new Customer();
-                customer.setName(name);
-                customer.setEmail(name + "@gmail.com");
-                bankAccountService.saveCustomer(customer);
+                CustomerDto customer = new CustomerDto(null, name, name + "@gmail.com");
+                customerService.saveCustomer(customer);
             });
-            bankAccountService.listCustomers().forEach(customer -> {
+            customerService.listCustomers().forEach(customer -> {
                 try {
-                    bankAccountService.saveCurrentBankAccount(Math.random() * 90000, 9000, customer.getId());
-                    bankAccountService.saveSavingAccount(Math.random() * 120000, 5.5, customer.getId());
+                    bankAccountService.saveCurrentBankAccount(Math.random() * 90000, 9000, customer.id());
+                    bankAccountService.saveSavingAccount(Math.random() * 120000, 5.5, customer.id());
                     bankAccountService.bankAccountsList().forEach(bankAccount -> {
                         for(int i=0; i < 10; i++){
-                            bankAccountService.credit(bankAccount.getId(),10000+Math.random()*12000,"credit");
-                            bankAccountService.debit(bankAccount.getId(),1000+Math.random()*9000,"Debit");
-
+                            operationService.credit(bankAccount.getId(), 10000 + Math.random() * 12000, "credit");
+                            operationService.debit(bankAccount.getId(), 1000 + Math.random() * 9000, "Debit");
                         }
                     });
                 } catch (CustomerNotFoundException e) {
-                    log.error("Failed to create accounts for customer {}: {}", customer.getId(), e.getMessage());
+                    log.error("Failed to create accounts for customer {}: {}", customer.id(), e.getMessage());
                 }
             });
         };

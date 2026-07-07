@@ -1,22 +1,16 @@
 package ma.enset.ebankingbanched.services;
 
-import ma.enset.ebankingbanched.entities.BankAccount;
-import ma.enset.ebankingbanched.entities.CurrentAccount;
-import ma.enset.ebankingbanched.entities.Customer;
-import ma.enset.ebankingbanched.entities.SavingAccount;
+import ma.enset.ebankingbanched.dtos.BankAccountDto;
+import ma.enset.ebankingbanched.dtos.CurrentBankAccountDto;
+import ma.enset.ebankingbanched.dtos.SavingBankAccountDto;
+import ma.enset.ebankingbanched.exceptions.BankAccountNotFoundException;
+import ma.enset.ebankingbanched.exceptions.CustomerNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BankAccountService {
-    Customer saveCustomer(Customer customer);
-    CurrentAccount saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId);
-    SavingAccount saveSavingAccount(double initialBalance, double interestRate, Long customerId);
-    List<Customer> listCustomers();
-    BankAccount getBankAccount(String accountId);
-    void debit(String accountId, double amount, String description);
-    void credit(String accountId, double amount, String description);
-    List<BankAccount> bankAccountsList();
-    void transfer(String accountIdSource, String accountIdDestination, double amount, String description);
-
+    CurrentBankAccountDto saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId);
+    SavingBankAccountDto saveSavingAccount(double initialBalance, double interestRate, Long customerId);
+    BankAccountDto getBankAccount(String accountId);
+    List<BankAccountDto> bankAccountsList();
 }
