@@ -43,8 +43,11 @@ public class OperationRestController {
         );
     }
 
-    @GetMapping("/accounts/{accountId}/operations")
-    public List<AccountOperationDto> accountHistory(@PathVariable String accountId){
-        return operationService.accountHistory(accountId);
+    @GetMapping({"/accounts/{accountId}/pageOperations", "/accounts/{accountId}/operations"})
+    public AccountHistoryDTO accountHistory(
+            @PathVariable String accountId,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "5") int size) {
+        return operationService.accountHistory(accountId, page, size);
     }
 }

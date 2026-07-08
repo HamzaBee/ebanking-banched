@@ -1,6 +1,7 @@
 package ma.enset.ebankingbanched.services;
 
 
+import ma.enset.ebankingbanched.dtos.AccountHistoryDTO;
 import ma.enset.ebankingbanched.dtos.AccountOperationDto;
 
 import java.math.BigDecimal;
@@ -11,5 +12,5 @@ public interface OperationService {
     void credit(String accountId, BigDecimal amount, String description);
     void transfer(String accountIdSource, String accountIdDestination, BigDecimal amount, String description);
 
-    List<AccountOperationDto> accountHistory(String accountId);
+    AccountHistoryDTO accountHistory(String accountId, int page, int size);
 }

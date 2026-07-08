@@ -46,14 +46,14 @@ public class EbankingBanchedApplication {
                 try {
                     bankAccountService.saveCurrentBankAccount(BigDecimal.valueOf(Math.random() * 90000), BigDecimal.valueOf(9000), customer.id());
                     bankAccountService.saveSavingAccount(BigDecimal.valueOf(Math.random() * 120000), BigDecimal.valueOf(5.5), customer.id());
-                    bankAccountService.bankAccountsList().forEach(bankAccount -> {
-                        for(int i=0; i < 10; i++){
-                            operationService.credit(bankAccount.getId(), BigDecimal.valueOf(10000 + Math.random() * 12000), "credit");
-                            operationService.debit(bankAccount.getId(), BigDecimal.valueOf(1000 + Math.random() * 9000), "Debit");
-                        }
-                    });
                 } catch (CustomerNotFoundException e) {
                     log.error("Failed to create accounts for customer {}: {}", customer.id(), e.getMessage());
+                }
+            });
+            bankAccountService.bankAccountsList().forEach(bankAccount -> {
+                for(int i=0; i < 10; i++){
+                    operationService.credit(bankAccount.getId(), BigDecimal.valueOf(10000 + Math.random() * 12000), "credit");
+                    operationService.debit(bankAccount.getId(), BigDecimal.valueOf(1000 + Math.random() * 9000), "Debit");
                 }
             });
         };
