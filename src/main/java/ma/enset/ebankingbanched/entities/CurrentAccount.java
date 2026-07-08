@@ -1,8 +1,11 @@
 package ma.enset.ebankingbanched.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.*;
+
+import java.math.BigDecimal;
 
 @Entity
 @DiscriminatorValue("CA")
@@ -11,5 +14,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CurrentAccount extends BankAccount{
-    private double overDraft;
+    @Column(precision = 19, scale = 4)
+    private BigDecimal overDraft;
 }

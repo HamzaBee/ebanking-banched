@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
         return bankAccountMapper.fromCustomer(customer);
     }
     @Override
-    public CustomerDto updateCustomer(Long customerId,CustomerDto customerDto) {
+    public CustomerDto updateCustomer(Long customerId, CustomerDto customerDto) {
         log.info("Updating customer with id: {}", customerId);
 
         Customer customer = customerRepository.findById(customerId)

@@ -20,6 +20,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -43,12 +44,12 @@ public class EbankingBanchedApplication {
             });
             customerService.listCustomers().forEach(customer -> {
                 try {
-                    bankAccountService.saveCurrentBankAccount(Math.random() * 90000, 9000, customer.id());
-                    bankAccountService.saveSavingAccount(Math.random() * 120000, 5.5, customer.id());
+                    bankAccountService.saveCurrentBankAccount(BigDecimal.valueOf(Math.random() * 90000), BigDecimal.valueOf(9000), customer.id());
+                    bankAccountService.saveSavingAccount(BigDecimal.valueOf(Math.random() * 120000), BigDecimal.valueOf(5.5), customer.id());
                     bankAccountService.bankAccountsList().forEach(bankAccount -> {
                         for(int i=0; i < 10; i++){
-                            operationService.credit(bankAccount.getId(), 10000 + Math.random() * 12000, "credit");
-                            operationService.debit(bankAccount.getId(), 1000 + Math.random() * 9000, "Debit");
+                            operationService.credit(bankAccount.getId(), BigDecimal.valueOf(10000 + Math.random() * 12000), "credit");
+                            operationService.debit(bankAccount.getId(), BigDecimal.valueOf(1000 + Math.random() * 9000), "Debit");
                         }
                     });
                 } catch (CustomerNotFoundException e) {
@@ -73,20 +74,20 @@ public class EbankingBanchedApplication {
             customerRepository.findAll().forEach(customer -> {
                 CurrentAccount currentAccount = new CurrentAccount();
                 currentAccount.setId(UUID.randomUUID().toString());
-                currentAccount.setBalance(Math.random() * 90000);
+                currentAccount.setBalance(BigDecimal.valueOf(Math.random() * 90000));
                 currentAccount.setCreatedAt(new Date());
                 currentAccount.setStatus(AccountStatus.CREATED);
                 currentAccount.setCustomer(customer);
-                currentAccount.setOverDraft(9000);
+                currentAccount.setOverDraft(BigDecimal.valueOf(9000));
                 bankAccountRepository.save(currentAccount);
 
                 SavingAccount savingAccount = new SavingAccount();
                 savingAccount.setId(UUID.randomUUID().toString());
-                savingAccount.setBalance(Math.random() * 80000);
+                savingAccount.setBalance(BigDecimal.valueOf(Math.random() * 80000));
                 savingAccount.setCreatedAt(new Date());
                 savingAccount.setStatus(AccountStatus.CREATED);
                 savingAccount.setCustomer(customer);
-                savingAccount.setInterestRate(5.5);
+                savingAccount.setInterestRate(BigDecimal.valueOf(5.5));
                 bankAccountRepository.save(savingAccount);
             });
 
@@ -94,7 +95,7 @@ public class EbankingBanchedApplication {
                 for (int i = 0; i < 10; i++) {
                     AccountOperation accountOperation = new AccountOperation();
                     accountOperation.setOperationDate(new Date());
-                    accountOperation.setAmount(Math.random() * 12000);
+                    accountOperation.setAmount(BigDecimal.valueOf(Math.random() * 12000));
                     accountOperation.setType(Math.random() > 0.5 ? OperationType.DEBIT : OperationType.CREDIT);
                     accountOperation.setBankAccount(account);
                     accountOperationRepository.save(accountOperation);

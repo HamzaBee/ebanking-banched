@@ -19,16 +19,19 @@ public interface BankAccountMapper {
 
     // CurrentAccount mappings
     @Mapping(source = "customer", target = "customerDto")
-    @Mapping(target = "type", constant = "CurrentAccount")
     CurrentBankAccountDto fromCurrentAccount(CurrentAccount currentAccount);
 
+//    @Mapping(source = "customerDto", target = "customer")
+//    CurrentAccount fromCurrentBankAccountDto(CurrentBankAccountDto currentBankAccountDto);
 
     // SavingAccount mappings
     @Mapping(source = "customer", target = "customerDto")
-    @Mapping(target = "type", constant = "SavingAccount")
     SavingBankAccountDto fromSavingAccount(SavingAccount savingAccount);
 
+//    @Mapping(source = "customerDto", target = "customer")
+//    SavingAccount fromSavingBankAccountDto(SavingBankAccountDto savingBankAccountDto);
 
+    AccountOperationDto fromAccountOperation(AccountOperation accountOperation);
 
 
 
