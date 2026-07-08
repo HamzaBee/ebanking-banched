@@ -1,6 +1,6 @@
 package ma.enset.ebankingbanched.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +20,6 @@ public class Customer {
     private Long id;
     private String name;
     private String email;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<BankAccount> bankAccounts;
 }

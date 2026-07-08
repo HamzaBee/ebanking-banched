@@ -3,8 +3,7 @@ package ma.enset.ebankingbanched.services;
 import ma.enset.ebankingbanched.dtos.BankAccountDto;
 import ma.enset.ebankingbanched.dtos.CurrentBankAccountDto;
 import ma.enset.ebankingbanched.dtos.SavingBankAccountDto;
-import ma.enset.ebankingbanched.exceptions.BankAccountNotFoundException;
-import ma.enset.ebankingbanched.exceptions.CustomerNotFoundException;
+
 
 import java.util.List;
 

@@ -41,9 +41,28 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto getCustomer(Long customerId) {
-        log.info("Fetching customer with id: {}", customerId);
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
         return bankAccountMapper.fromCustomer(customer);
     }
+    @Override
+    public CustomerDto updateCustomer(Long customerId,CustomerDto customerDto) {
+        log.info("Updating customer with id: {}", customerId);
+
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer"));
+
+        bankAccountMapper.updateCustomerFromDto(customerDto, customer);
+
+        return bankAccountMapper.fromCustomer(customer);
+    }
+    @Override
+    public void deleteCustomer(Long customerId) {
+        log.info("Deleting customer with id: {}", customerId);
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer"));
+        customerRepository.delete(customer);
+        log.info("Customer deleted successfully with id: {}", customerId);
+    }
+
 }

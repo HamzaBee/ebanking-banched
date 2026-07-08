@@ -4,6 +4,8 @@ import ma.enset.ebankingbanched.dtos.*;
 import ma.enset.ebankingbanched.entities.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+
 
 @Mapper(componentModel = "spring")
 public interface BankAccountMapper {
@@ -12,23 +14,22 @@ public interface BankAccountMapper {
     CustomerDto fromCustomer(Customer customer);
 
     Customer fromCustomerDto(CustomerDto customerDto);
+    @Mapping(target = "id", ignore = true)
+    void updateCustomerFromDto(CustomerDto dto, @MappingTarget Customer customer);
 
     // CurrentAccount mappings
     @Mapping(source = "customer", target = "customerDto")
     @Mapping(target = "type", constant = "CurrentAccount")
     CurrentBankAccountDto fromCurrentAccount(CurrentAccount currentAccount);
 
-    @Mapping(source = "customerDto", target = "customer")
-    CurrentAccount fromCurrentBankAccountDto(CurrentBankAccountDto currentBankAccountDto);
 
     // SavingAccount mappings
     @Mapping(source = "customer", target = "customerDto")
     @Mapping(target = "type", constant = "SavingAccount")
     SavingBankAccountDto fromSavingAccount(SavingAccount savingAccount);
 
-    @Mapping(source = "customerDto", target = "customer")
-    SavingAccount fromSavingBankAccountDto(SavingBankAccountDto savingBankAccountDto);
 
-    // AccountOperation mapping
-    AccountOperationDto fromAccountOperation(AccountOperation accountOperation);
+
+
+
 }

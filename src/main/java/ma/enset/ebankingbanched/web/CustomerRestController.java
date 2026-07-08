@@ -26,4 +26,13 @@ public class CustomerRestController {
     public CustomerDto getCustomer(@PathVariable(name = "id") Long id){
         return customerService.getCustomer(id);
     }
+    @PutMapping("/customers/{customerId}")
+    public CustomerDto updateCustomer(@PathVariable Long customerId,
+                                      @RequestBody CustomerDto customerDto){
+        return customerService.updateCustomer(customerId, customerDto);
+    }
+    @DeleteMapping("/customers/{customerId}")
+    public void deleteCustomer(@PathVariable Long customerId){
+        customerService.deleteCustomer(customerId);
+    }
 }
