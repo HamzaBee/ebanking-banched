@@ -1,6 +1,6 @@
 # E-Banking Backend Application
 
-A Spring Boot-based backend system for e-banking operations, supporting customer management, current and savings bank accounts, and transactional account operations (debit, credit, and transfers).
+A Spring Boot-based backend system for e-banking operations, supporting customer management, current and savings bank accounts, and transactional account operations (debit, credit, and transfers) with pagination and global exception handling.
 
 ---
 
@@ -50,34 +50,66 @@ The schema comprises three core tables:
 
 ## API Testing & Verification
 
-Below are the Postman testing results for the `CustomerRestController` endpoints.
+Below are the Postman testing results for the REST Controller endpoints.
 
-### Customer CRUD Operations
+### 1. Customer CRUD Operations (`CustomerRestController`)
 
-#### 1. Retrieve All Customers (`GET /customers`)
+#### Retrieve All Customers (`GET /customers`)
 Fetches the list of all registered customers.
 ![GET All Customers](JavaScreenshots/Screen6.png)
 
-#### 2. Create a New Customer (`POST /customers`)
-Adds a new customer profile. In the sample, a customer named `Hamza` is created with ID `4`.
+#### Create a New Customer (`POST /customers`)
+Adds a new customer profile.
 ![POST Create Customer](JavaScreenshots/Screen7.png)
 
-#### 3. Fetch Customer Details by ID (`GET /customers/{id}`)
-Fetches specific customer details. Here, details of customer `3` (Mohamed) are retrieved.
+#### Fetch Customer Details by ID (`GET /customers/{id}`)
+Fetches specific customer details by ID.
 ![GET Customer by ID](JavaScreenshots/Screen8.png)
 
-#### 4. Update Customer Details (`PUT /customers/{customerId}`)
-Updates the customer record. Customer `4` is updated to `Hamza Updated`.
+#### Update Customer Details (`PUT /customers/{customerId}`)
+Updates the customer record.
 ![PUT Update Customer](JavaScreenshots/Screen9.png)
 
-#### 5. Delete a Customer (`DELETE /customers/{customerId}`)
+#### Delete a Customer (`DELETE /customers/{customerId}`)
 Deletes the customer record by ID.
 ![DELETE Customer](JavaScreenshots/Screen10.png)
 
 ---
 
+### 2. Bank Account Operations (`BankAccountRestController`)
+
+#### Retrieve All Bank Accounts (`GET /accounts`)
+Fetches the list of all registered current and savings bank accounts.
+![GET All Bank Accounts](JavaScreenshots/Screen12-accounts.png)
+
+#### Fetch Bank Account Details by ID (`GET /accounts/{accountId}`)
+Fetches details of a specific bank account.
+![GET Bank Account by ID](JavaScreenshots/Screen13.png)
+
+---
+
+### 3. Transactional Operations & History (`OperationRestController`)
+
+#### Account Debit (`POST /accounts/debit`)
+Debits a specified amount from an account.
+![POST Debit](JavaScreenshots/Screen16-debit.png)
+
+#### Account Credit (`POST /accounts/credit`)
+Credits a specified amount to an account.
+![POST Credit](JavaScreenshots/Screen15-credit.png)
+
+#### Transfer Between Accounts (`POST /accounts/transfer`)
+Transfers an amount from a source account to a destination account.
+![POST Transfer](JavaScreenshots/Screen15-Transfer.png)
+
+#### Paginated Account Operations History (`GET /accounts/{accountId}/pageOperations`)
+Retrieves a paginated list of operations for a specific bank account.
+![GET Paginated Operations](JavaScreenshots/Screen14.png)
+
+---
+
 ## Interactive API Documentation (Swagger UI)
 
-With Springdoc OpenAPI integrated, Swagger UI is available at `http://localhost:8085/swagger-ui/index.html` to visually explore and execute the REST endpoints.
+With Springdoc OpenAPI integrated, Swagger UI is available at `http://localhost:8085/swagger-ui/index.html` to visually explore and execute all the REST endpoints.
 
-![Swagger UI Interface](JavaScreenshots/Screenshot%202026-07-08%20135851.png)
+![Swagger UI Interface](JavaScreenshots/Screen11.png)
