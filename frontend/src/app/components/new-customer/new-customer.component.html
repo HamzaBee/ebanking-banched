@@ -1,0 +1,63 @@
+<div class="container mt-4 col-md-6 offset-md-3">
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
+      <h4 class="mb-0 fw-bold">New Customer</h4>
+    </div>
+    <div class="card-body p-4">
+      <form [formGroup]="newCustomerFormGroup" (ngSubmit)="handleSaveCustomer()">
+        <!-- Name Input -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold text-muted">Name</label>
+          <input 
+            type="text" 
+            formControlName="name" 
+            class="form-control" 
+            placeholder="e.g. John Doe"
+            [class.is-invalid]="newCustomerFormGroup.controls.name.touched && newCustomerFormGroup.controls.name.invalid"
+          >
+          @if (newCustomerFormGroup.controls.name.touched && newCustomerFormGroup.controls.name.errors) {
+            <div class="invalid-feedback">
+              @if (newCustomerFormGroup.controls.name.errors['required']) {
+                Name is required.
+              }
+              @if (newCustomerFormGroup.controls.name.errors['minlength']) {
+                Name must be at least 4 characters long.
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Email Input -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold text-muted">Email</label>
+          <input 
+            type="email" 
+            formControlName="email" 
+            class="form-control" 
+            placeholder="e.g. john.doe@example.com"
+            [class.is-invalid]="newCustomerFormGroup.controls.email.touched && newCustomerFormGroup.controls.email.invalid"
+          >
+          @if (newCustomerFormGroup.controls.email.touched && newCustomerFormGroup.controls.email.errors) {
+            <div class="invalid-feedback">
+              @if (newCustomerFormGroup.controls.email.errors['required']) {
+                Email is required.
+              }
+              @if (newCustomerFormGroup.controls.email.errors['email']) {
+                Please enter a valid email address.
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          [disabled]="newCustomerFormGroup.invalid" 
+          class="btn btn-success w-100 py-2.5 fw-semibold shadow-sm"
+        >
+          Save Customer
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="container mt-4">
+  <h2>Customers Directory</h2>
+
+  <!-- Search form -->
+  <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()" class="mb-4">
+    <div class="input-group">
+      <input 
+        type="text" 
+        formControlName="keyword" 
+        class="form-control" 
+        placeholder="Search customers by name or email..."
+      >
+      <button class="btn btn-primary" type="submit">
+        Search
+      </button>
+    </div>
+  </form>
+
+  <!-- Error message display -->
+  @if (errorMessage()) {
+    <div class="alert alert-danger mt-3" role="alert">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <!-- Customers table -->
+  @if (customers().length > 0) {
+    <table class="table table-hover mt-3">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (customer of customers(); track customer.id) {
+          <tr>
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.email }}</td>
+            <td>
+              <button (click)="handleDeleteCustomer(customer)" class="btn btn-danger btn-sm">
+                Delete
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else if (!errorMessage()) {
+    <p class="text-muted mt-3">No customers found or loading...</p>
+  }
+</div>
