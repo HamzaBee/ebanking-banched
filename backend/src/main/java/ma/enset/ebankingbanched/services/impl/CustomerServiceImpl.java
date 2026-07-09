@@ -65,4 +65,16 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("Customer deleted successfully with id: {}", customerId);
     }
 
+    @Override
+    public List<CustomerDto> searchCustomer(String keyword) {
+        log.info("Searching for customers with keyword: {}", keyword);
+        List<Customer> search = customerRepository.searchCustomer(keyword);
+        return search.stream()
+                .map(bankAccountMapper::fromCustomer)
+                .toList();
+
+    }
+
+
+
 }

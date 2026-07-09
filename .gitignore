@@ -17,3 +17,6 @@ frontend/.angular/
 # Backend — Maven
 backend/target/
 backend/*.class
+
+frontend/cache/
+target/
